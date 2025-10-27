@@ -1,0 +1,26 @@
+name: Extract ZIP File
+
+on:
+  push:
+    paths:
+      - '**/*.zip'
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Unzip the file
+        run: |
+          mkdir extracted
+          unzip *.zip -d extracted/
+
+      - name: Commit extracted files
+        run: |
+          git add extracted/*
+          git commit -m "Extract ZIP contents"
+          git push
+
